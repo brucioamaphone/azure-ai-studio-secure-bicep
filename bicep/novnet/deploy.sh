@@ -4,22 +4,23 @@
 source ./functions.sh
 
 # Variables
-declare -A variables=(
-  [template]="main.bicep"
-  [parameters]="main.bicepparam"
-  [resourceGroupName]="rg-ai-foundry-secure"
-  [location]="eastus"
-  [validateTemplate]=0
-  [useWhatIf]=0
-)
+template="main.bicep"
+parameters="main.bicepparam"
+resourceGroupName="Ai-Bicep02"
+location="eastus"
+validateTemplate=0
+useWhatIf=0
 
 subscriptionName=$(az account show --query name --output tsv)
 parse_args variables $@
 
-# Validates if the resource group exists in the subscription, if not creates it
-echo "Checking if [$resourceGroupName] resource group exists in the [$subscriptionName] subscription..."
-az group show --name $resourceGroupName &>/dev/null
+echo "DEBUG: subscriptionName=$subscriptionName"
+echo "DEBUG: resourceGroupName=$resourceGroupName"
+echo "DEBUG: location=$location"
+az group show --name $resourceGroupName
+echo "DEBUG: az group show exit code: $?"
 
+# Validates if the resource group exists in the subscription, if not creates it
 if [[ $? != 0 ]]; then
   echo "No [$resourceGroupName] resource group exists in the [$subscriptionName] subscription"
   echo "Creating [$resourceGroupName] resource group in the [$subscriptionName] subscription..."
@@ -28,7 +29,7 @@ if [[ $? != 0 ]]; then
   az group create --name $resourceGroupName --location $location 1>/dev/null
 
   if [[ $? == 0 ]]; then
-    echo "[$resourceGroupName] resource group successfully created in the [$subscriptionName] subscription"
+    echo "[$resourceGroupName] resource group successfully created in the [$subscriptionName] subslscription"
   else
     echo "Failed to create [$resourceGroupName] resource group in the [$subscriptionName] subscription"
     exit

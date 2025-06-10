@@ -1,8 +1,8 @@
 using './main.bicep'
 
-param prefix = 'secure'
-param suffix = 'test'
-param userObjectId = '<user-object-id'
+param prefix = 'azaibc'
+param suffix = 'T001'
+param userObjectId = '4b3228e4-11cc-456a-bc70-20c49eb5b82c'
 param keyVaultEnablePurgeProtection = false
 param acrEnabled = false
 param nspEnabled = false
@@ -30,5 +30,5 @@ param openAiDeployments = [
 ]
 param tags = {
   environment: 'development'
-  iac: 'bicep'
+  project: 'bicep'
 }
